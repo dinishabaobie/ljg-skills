@@ -56,7 +56,7 @@ Running **Extract** in **ljg-qa**...
 
 ## 输出
 
-- 格式：markdown（`**bold**`，YAML frontmatter 头）
+- 格式：markdown（`*bold*`，禁 markdown 语法）
 - 路径：`~/Documents/notes/`
 - denote 文件名：`{YYYYMMDDTHHMMSS}--qa-{核心主题 5-10 字}__qa.md`
 
@@ -67,8 +67,8 @@ Running **Extract** in **ljg-qa**...
 ```
 User: /ljg-qa https://example.com/article
 → WebFetch 获取
-→ 找观点骨架 → 设计 Q 链 → 写 A 四段
-→ markdown 输出到 ~/Documents/notes/
+→ 找观点骨架 → 设计 Q 链 → 写 A 三段
+→ markdown 输出到 ~/Downloads/
 ```
 
 *Example 2: 论文 PDF*

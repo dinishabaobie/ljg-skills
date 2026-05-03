@@ -144,49 +144,46 @@ denote schema 文件名：`{YYYYMMDDTHHMMSS}--qa-{主题}__qa.md`
 
 ## 文件结构
 
-```markdown
----
-title:      {一句精炼的核心观点——10-25 字}
-subtitle:   {原文标题}
-date:       {YYYY-MM-DD Day HH:MM}
-tags:       [qa]
-identifier: {YYYYMMDDTHHMMSS}
-source:     {URL 或来源}
----
+```org
+#+title:      {一句精炼的核心观点——10-25 字}
+#+subtitle:   {原文标题}
+#+date:       [{YYYY-MM-DD Day HH:MM}]
+#+filetags:   :qa:
+#+identifier: {YYYYMMDDTHHMMSS}
+#+source:     {URL 或来源}
 
-# 引子
+* 引子
 
 （一段话，3-5 句：这篇东西在讲什么，为什么值得拿出来问。带读者落地，不是综述）
 
-# Q1: {一句尖锐的问句，≤ 20 字}
+* Q1: {一句尖锐的问句，≤ 20 字}
 
-**结论**：...
+  *结论*：...
 
-**形式化**：...（如 `A = B + C` / `旧: X → 新: Y`）
+  *形式化*：...（如 `A = B + C` / `旧: X → 新: Y`）
 
-**怎么想到的**：
-- ...
-- ...
-- ...
+  *怎么想到的*：
+  - ...
+  - ...
+  - ...
 
-**边界**：...
+  *边界*：...
 
-# Q2: ...
+* Q2: ...
 
-...
+  ...
 
-# 收口
+* 收口
 
 （一句话压住整串 Q-A：作者真正贡献的那个东西是什么。不是总结，是命名）
 ```
 
 注意：
 
-- 加粗用 `**bold**`（markdown 双星号）
-- 标题层级从 `#` 开始，不跳级
-- 列表用 `- item` 或 `1. item`
-- 分隔用空行或 `---`
-- 代码用反引号 `` `code` ``
+- 加粗用 `*bold*`（markdown），不用 `**bold**`（markdown）
+- 列表用 `- item`，不用 `* item`（`*` 在 org 是标题）
+- 分隔用空行或层级，不用 `---`
+- 代码用 `~code~` 或 `=code=`，不用反引号
 
 ## 验收
 
