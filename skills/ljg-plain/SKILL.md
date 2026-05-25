@@ -29,16 +29,14 @@ version: "5.0.0"
 - 文件名：`{时间戳}--plain-{简短标题}__plain.md`
 - 输出目录：`~/Documents/notes/`
 
-### Markdown 文件头
+### Org 文件头
 
-```markdown
----
-title: plain-{简短标题}
-date: {YYYY-MM-DD HH:MM}
-tags: [plain, atom]
-identifier: {YYYYMMDDTHHMMSS}
-source: {URL 或来源描述}
----
+```
+#+title:      plain-{简短标题}
+#+date:       [{YYYY-MM-DD Day HH:MM}]
+#+filetags:   :plain:atom:
+#+identifier: {YYYYMMDDTHHMMSS}
+#+source:     {URL 或来源描述}
 ```
 
 文件写入后报告路径。
@@ -95,7 +93,7 @@ URL → WebFetch | 文本 → 直接用 | 文件路径 → Read | 概念 → 直
 
 扫完列修改清单（哪句触发什么，改前→改后）。清单不写入文件。
 
-### 4. 生成 Markdown 文件
+### 4. 生成 Org 文件
 
 按 Denote 规范获取时间戳，写出文件头 + 正文，存入 `~/Documents/notes/`。
 
