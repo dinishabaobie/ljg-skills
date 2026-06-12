@@ -1,0 +1,19 @@
+name: 自动同步上游仓库
+
+on:
+  schedule:
+    # UTC 19:00 = 北京时间每天凌晨 3:00
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 同步 lijigang/ljg-skills 的最新提交
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh repo sync ${{ github.repository }} --source lijigang/ljg-skills --branch master
