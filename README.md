@@ -1,39 +1,41 @@
 # ljg-skills
 
-我的 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 自定义技能集。
+我的 Codex 自定义技能集。
 
 ## 安装
 
-使用 [skills CLI](https://github.com/vercel-labs/skills)（基于 `npx`）一行安装：
+使用 [skills CLI](https://github.com/vercel-labs/skills) 安装到 Codex：
 
 ```bash
 # 安装全部技能（全局，org-mode 格式）
-npx skills add lijigang/ljg-skills -g --all
+bunx skills add lijigang/ljg-skills -g -a codex --skill '*' -y
 
 # 安装全部技能（Markdown 格式，适用于 Obsidian / VSCode / Notion 等）
-npx skills add lijigang/ljg-skills#md -g --all
+bunx skills add lijigang/ljg-skills#md -g -a codex --skill '*' -y
 
 # 安装单个技能
-npx skills add lijigang/ljg-skills -g --skill ljg-card
+bunx skills add lijigang/ljg-skills -g -a codex --skill ljg-card -y
 
 # 安装单个技能（Markdown 格式）
-npx skills add lijigang/ljg-skills#md -g --skill ljg-card
+bunx skills add lijigang/ljg-skills#md -g -a codex --skill ljg-card -y
 
 # 安装多个指定技能
-npx skills add lijigang/ljg-skills -g --skill ljg-card --skill ljg-learn
+bunx skills add lijigang/ljg-skills -g -a codex --skill ljg-card --skill ljg-learn -y
 
 # 查看仓库中有哪些技能
-npx skills add lijigang/ljg-skills -l
+bunx skills add lijigang/ljg-skills -l
 ```
 
 **参数说明：**
 
 | 参数 | 作用 |
 |------|------|
-| `-g` | 全局安装到 `~/.claude/skills/`（推荐）。不加则装到当前项目 `.claude/skills/` |
+| `-a codex` | 只安装给 Codex |
+| `-g` | 全局安装到 `~/.codex/skills/`（推荐）；不加则安装到项目级 `.agents/skills/` |
 | `--skill <name>` | 指定安装某个技能，可重复使用 |
-| `--all` | 安装仓库内全部技能 |
+| `--skill '*'` | 安装仓库内全部技能 |
 | `#md` | 从 `md` branch 安装 Markdown 格式版本（默认为 org-mode） |
+| `-y` | 跳过交互确认 |
 | `-l` | 仅列出可用技能，不安装 |
 
 ### ljg-card 依赖
@@ -41,17 +43,23 @@ npx skills add lijigang/ljg-skills -l
 `ljg-card` 依赖 Playwright 截图，安装后需额外执行：
 
 ```bash
-cd ~/.claude/skills/ljg-card && npm install && npx playwright install chromium
+cd ~/.codex/skills/ljg-card && bun install && bunx playwright install chromium
 ```
 
 ### 替代方式：git clone
 
-```bash
-# org-mode 版本
-git clone https://github.com/lijigang/ljg-skills.git ~/.claude/plugins/ljg-skills
+仓库根目录不是技能目录，clone 后还要把 `skills/` 同步到 Codex。下面两种格式二选一：
 
-# Markdown 版本
-git clone -b md https://github.com/lijigang/ljg-skills.git ~/.claude/plugins/ljg-skills
+```bash
+# org-mode 版本（master）
+git clone --branch master --depth 1 https://github.com/lijigang/ljg-skills.git "$HOME/code/ljg-skills"
+mkdir -p "$HOME/.codex/skills"
+rsync -a "$HOME/code/ljg-skills/skills/" "$HOME/.codex/skills/"
+
+# Markdown 版本（md）
+git clone --branch md --depth 1 https://github.com/lijigang/ljg-skills.git "$HOME/code/ljg-skills-md"
+mkdir -p "$HOME/.codex/skills"
+rsync -a "$HOME/code/ljg-skills-md/skills/" "$HOME/.codex/skills/"
 ```
 
 ## 技能
@@ -62,7 +70,6 @@ git clone -b md https://github.com/lijigang/ljg-skills.git ~/.claude/plugins/ljg
 | **ljg-card** | 内容铸卡 — 将内容转为 PNG 视觉卡片（长图 `-l`、信息图 `-i`、多卡 `-m`、视觉笔记 `-v`、漫画 `-c`、白板 `-w`、大字 `-b`） |
 | **ljg-learn** | 概念解剖 — 从八个方向切开一个概念（历史、辩证、现象、语言、形式、存在、美感、元反思），压成一句顿悟 |
 | **ljg-paper** | 论文阅读 — 为非学术人士提取论文核心想法，重理解不重批判 |
-| **ljg-paper-river** | 论文溯源 — 倒读法，递归挖前序论文（最多5层）+ 最新进展，从源头讲述问题演化史 |
 | **ljg-book** | 拆书 — 落在一道等式 f(x) 上：作者站在哪个问题前（x）/ 他这副取景框是什么（f，中心一问：猜想造出的新框，还是仓库捡的现成框）/ 透过框照出的画面与落点（f(x)）；收尾一张 ASCII 参考系图把各副 f 钉进同一张图，再走两步把框推到书外做可证伪的预测 |
 | **ljg-library** | 取景框借书卡 — 一本书 → 一幅「取景框」意向画面 → 一张收藏卡（PNG）：真实封面 / 作者 / 书目 + 费曼式讲透画面；图解用 AI 生图、继刚作固定主角（从墨像参考生成），吉田诚治式绘本感风格（绘本感异世界日常、暖光斜射、治愈又精致） |
 | **ljg-map** | 生态地形图卡 — 一个行业 → 一张可俯瞰的生态地形（PNG，AI 生图，默认 `-a` 动森 / 可选 `-c` cyber）：价值像河流过地貌，标出瓶颈（收窄的隘口/水坝）与价值捕获点（利润沉淀的宝藏堆），继刚作测量员俯瞰；配三个关键指标 base rate + 三个大问题 |
@@ -77,20 +84,9 @@ git clone -b md https://github.com/lijigang/ljg-skills.git ~/.claude/plugins/ljg
 | **ljg-read** | 伴读 — 陪你读任何文本，英文三层翻译（信达雅）+ 结构标注 + 深度提问 + 跨领域旁逸 |
 | **ljg-relationship** | 关系分析 — 五层结构诊断 + 精神分析，通过对话引导帮用户"看见"关系真实结构 |
 | **ljg-roundtable** | 圆桌讨论 — 一个议题一场圆桌：真实人物逐轮交锋，每轮收一张 ASCII 结构图，散场全文存档 |
-| **ljg-travel** | 旅行研究 — 输入城市名，生成深度文化研究文档（org-mode）+ 便携卡片（PNG） |
-| **ljg-skill-map** | 技能地图 — 扫描所有已安装技能，渲染可视化总览 |
 | **ljg-present** | 演讲铸造器 — 默认高桥流（一页一关键词、奶白底墨字）；`-s` 标语流（VACAT/BIG STUDIOS 风：黑红双色块、ultra-bold、完整断言句撑屏）|
-| **ljg-push** | 推送引擎 — 把本地 `~/.claude/skills/ljg-*` 一键同步到 github repo（master + md 双分支）|
+| **ljg-push** | 推送引擎 — 把本地 `~/.codex/skills/ljg-*` 一键同步到 github repo（master + md 双分支）|
 
-
-## 工作流
-
-工作流将多个技能串联为一个命令。
-
-| 工作流 | 技能链 | 说明 |
-|--------|--------|------|
-| **ljg-paper-flow** | ljg-paper → ljg-library | 读论文 + 铸取景框借书卡一气呵成 |
-| **ljg-word-flow** | ljg-word → ljg-card -i | 单词深度分析 + 信息图卡片一气呵成 |
 
 ## 输出格式
 
